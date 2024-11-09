@@ -20,7 +20,7 @@ body {
   50% {
     background-position: 90% 40%;
   }
-  
+
   100% {
     background-position: 0 0;
   }
@@ -47,6 +47,15 @@ nav {
   color: #0F2336;
   margin: 5px;
   margin-right: 17px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  outline: none;
+  border: none;
+  background: transparent;
+  font-family: "Lexend", sans-serif;
+  font-size: 17px;
+  width: max-content;
 }
 
 .score-item {
@@ -93,12 +102,14 @@ svg {
 .user {
   display: flex;
   flex-direction: row;
-  padding: 7px;
+  padding: 9px;
   align-items: center;
 }
 
 .box {
-  display: flex;flex-direction: column;
+  margin-left: 5px;
+  display: flex;
+  flex-direction: column;
 }
 
 .box .subname {
@@ -108,7 +119,8 @@ svg {
 
 .label {
   font-weight: bold;
-  display: flex;flex-direction:row;
+  display: flex;
+  flex-direction: row;
   margin: 2px;
   margin-right: 10px;
   font-size: 18px;
@@ -125,11 +137,11 @@ svg {
   color: #B57020;
 }
 
-.user:nth-child(1) .hash  {
+.user:nth-child(1) .hash {
   color: #FFB45D;
 }
 
-.user:nth-child(2)  .label {
+.user:nth-child(2) .label {
   color: #8B8B8B;
 }
 
@@ -145,8 +157,10 @@ svg {
   color: #A5835F;
 }
 
-.user:nth-child(1) .label, .user:nth-child(2) .label, .user:nth-child(3) .label {
-    font-size: 28px;
+.user:nth-child(1) .label,
+.user:nth-child(2) .label,
+.user:nth-child(3) .label {
+  font-size: 28px;
 }
 
 

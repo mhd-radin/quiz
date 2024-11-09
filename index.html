@@ -1,22 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>HTML</title>
-  
+
   <!-- HTML -->
-  
+
 
   <!-- Custom Styles -->
+  <link rel="stylesheet" href="app/quiz.css">
   <link rel="stylesheet" href="style.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+
 </head>
 
 <body>
-  <a href="go.html"></a>
+
+  <div class="body">
+    <div class="container">
+      <div class="qes-box">
+        <div class="qes-info" id="qesInfo">Register</span></div>
+        <h3 class="question" id="question">Enter details for identify who you are?</h3>
+      </div>
+
+      <div class="inputs">
+        <input type="text" id="name" placeholder="Your Full Name">
+        <input type="number" id="rollnum" placeholder="Roll Number">
+        <select name="divsion" id="divsion">
+          <option value="H2A">H2A</option>
+          <option value="H2B">H2B</option>
+        </select>
+      </div>
+      <div class="footer">
+        <button type="submit">Submit</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Project -->
-  <script src="main.js"></script>
+  <script src="reg.js"></script>
+  <script type="text/javascript" charset="utf-8" defer>
+    lucide.createIcons();
+  </script>
 </body>
+
 </html>
