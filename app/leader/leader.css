@@ -1,0 +1,163 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap');
+@import url("../../cdn_modules/animate.css@4.1.1/animate.min.css");
+
+body {
+  font-family: "Lexend", sans-serif;
+  margin: 0;
+  background: url("../../assets/bg5.jpg");
+  background-position-x: center;
+  background-position-y: -20px;
+  background-repeat: repeat;
+  animation: bg 0s linear infinite;
+  /* background-size: 350%; */
+}
+
+@keyframes bg {
+  0% {
+    background-position: 0px 0px;
+  }
+
+  50% {
+    background-position: 90% 40%;
+  }
+  
+  100% {
+    background-position: 0 0;
+  }
+}
+
+nav {
+  padding: 20px;
+  margin: 6px;
+  display: flex;
+  flex-direction: row;
+  position: relative;
+}
+
+.right-icons {
+  position: absolute;
+  right: 27px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+
+.subject {
+  color: #0F2336;
+  margin: 5px;
+  margin-right: 17px;
+}
+
+.score-item {
+  padding: 5px 16px;
+  margin: 3px;
+  border-radius: 20px;
+}
+
+.score-success {
+  background: #44A740;
+  color: #fff;
+}
+
+.score-wrong {
+  background: #DA4545;
+  color: #fff;
+}
+
+.score-points {
+  background: #061222;
+  color: #fff;
+}
+
+nav svg {
+  width: 30px;
+  height: 30px;
+}
+
+nav svg:hover {
+  color: #262E8A;
+}
+
+svg {
+  color: #858585;
+}
+
+.container {
+  background: #fff;
+  border-radius: 0px;
+  margin-top: 10px;
+  padding: 10px;
+}
+
+.user {
+  display: flex;
+  flex-direction: row;
+  padding: 7px;
+  align-items: center;
+}
+
+.box {
+  display: flex;flex-direction: column;
+}
+
+.box .subname {
+  font-size: 12px;
+  color: #5F5F5F;
+}
+
+.label {
+  font-weight: bold;
+  display: flex;flex-direction:row;
+  margin: 2px;
+  margin-right: 10px;
+  font-size: 18px;
+}
+
+
+.hash {
+  color: #558FEC;
+}
+
+
+
+.user:nth-child(1) .label {
+  color: #B57020;
+}
+
+.user:nth-child(1) .hash  {
+  color: #FFB45D;
+}
+
+.user:nth-child(2)  .label {
+  color: #8B8B8B;
+}
+
+.user:nth-child(2) .hash {
+  color: #BABABA;
+}
+
+.user:nth-child(3) .label {
+  color: #9F766C;
+}
+
+.user:nth-child(3) .hash {
+  color: #A5835F;
+}
+
+.user:nth-child(1) .label, .user:nth-child(2) .label, .user:nth-child(3) .label {
+    font-size: 28px;
+}
+
+
+
+@media screen and (min-width: 600px) {
+  body {
+    background-position: center center;
+  }
+}
+
+nav,
+nav * {
+  color: #163048 !important;
+}

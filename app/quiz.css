@@ -1,0 +1,315 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap');
+@import url("../cdn_modules/animate.css@4.1.1/animate.min.css");
+
+body {
+  font-family: "Lexend", sans-serif;
+  margin: 0;
+  background: url("../assets/bg5.jpg");
+  background-position-x: center;
+  background-position-y: -20px;
+  background-repeat: repeat;
+  animation: bg 0s linear infinite;
+  /* background-size: 350%; */
+}
+
+@keyframes bg {
+  0% {
+    background-position: 0px 0px;
+  }
+
+  50% {
+    background-position: 90% 40%;
+  }
+  
+  100% {
+    background-position: 0 0;
+  }
+}
+
+nav {
+  padding: 20px;
+  margin: 6px;
+  display: flex;
+  flex-direction: row;
+  position: relative;
+}
+
+nav .right-icons {
+  position: absolute;
+  right: 27px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.subject {
+  color: #0F2336;
+  margin: 5px;
+  margin-right: 17px;
+}
+
+.score-item {
+  padding: 5px 16px;
+  margin: 3px;
+  border-radius: 20px;
+}
+
+.score-success {
+  background: #44A740;
+  color: #fff;
+}
+
+.score-wrong {
+  background: #DA4545;
+  color: #fff;
+}
+
+.score-points {
+  background: #061222;
+  color: #fff;
+}
+
+nav svg {
+  width: 30px;
+  height: 30px;
+}
+
+nav svg:hover {
+  color: #262E8A;
+}
+
+svg {
+  color: #858585;
+}
+
+
+.container {
+  background: #fff;
+  padding: 13px;
+  margin: 23px;
+  margin-top: 16%;
+  position: relative;
+  border-radius: 12px;
+  box-shadow: 0 0 8px #ccc;
+  padding-top: 25px;
+}
+
+.container progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  border-radius: 0;
+  height: 5px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+
+::-webkit-progress-bar {
+  background: #fff;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+::-webkit-progress-value {
+  background: #4083C7;
+  border-radius: 6px;
+}
+
+.container h3 {
+  margin: 9px;
+  max-width: 90%;
+}
+
+.timer {
+  font-size: 20px;
+  font-weight: bold;
+  padding: 8px;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 10px solid #D2276B;
+  outline: 2px solid #EA3F83;
+  outline-offset: 3px;
+  transition: 1s all;
+  animation: timer 1s infinite ease-out;
+  color: #164260;
+  background: #fff;
+
+  position: absolute;
+  top: 0;
+  right: 20px;
+  transform: translate(0, -50%);
+  z-index: 9999;
+}
+
+.qes-info {
+  color: #3996DD;
+  font-size: 16px;
+  padding: 5px;
+  margin: 5px;
+  margin-top: 10px;
+  font-weight: 600;
+}
+
+.qes-info .sub-info {
+  color: #55B6FF;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.question {
+  color: #1E3A56;
+}
+
+.clues {
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  margin: 5px;
+  margin-top: 45px;
+}
+
+.clue-box {
+  padding: 8px 13px;
+  background: #E3EAF0;
+  color: #333;
+  border-radius: 8px;
+  margin: 4px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.clue-symbol {
+  background: #1965B0;
+  padding: 8px;
+  color: #fff;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-size: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin: 4px;
+}
+
+.clue-text {
+  margin-left: 10px;
+}
+
+.clue-box:nth-child(2) .clue-symbol {
+  background: #FFAB5B;
+}
+
+.clue-box:nth-child(3) .clue-symbol {
+  background: #DF4B4B;
+}
+
+.clue-box:nth-child(4) .clue-symbol {
+  background: #32C46C;
+}
+
+.clue-box.success {
+  background: #32C46C;
+  color: #fff;
+  animation: pulse 1.5s 1;
+}
+
+.clue-box.success .clue-symbol,
+.clue-box.wrong .clue-symbol {
+  background: transparent;
+  color: #eee;
+}
+
+.clue-box.outline-red {
+  border: 2px solid #E05353;
+  background: #FFE3E3;
+}
+
+
+.clue-box.outline-red .clue-symbol {
+  background: #FFA8A8;
+  color: #555;
+}
+
+.clue-box.wrong {
+  background: #E05353;
+  color: #fff;
+  animation: headShake 0.9s 1;
+}
+
+.bottom {}
+
+@keyframes timer {
+  from {
+    outline-offset: 0px;
+    outline: 2px solid #EA3F834A;
+    color: #000;
+  }
+
+  to {
+    outline-offset: 7px;
+    outline: 5px solid #EA3F83;
+    color: #666;
+  }
+}
+
+@keyframes alert {
+  from {
+    outline-offset: 0px;
+    outline: 2px solid #EA3F834A;
+    background: #EA3F83;
+    color: #A72626;
+  }
+
+  to {
+    outline-offset: 7px;
+    outline: 5px solid #EA3F83;
+    background: #fff;
+    color: #A72626;
+  }
+}
+
+@media screen and (min-width: 600px) {
+  body {
+    background-position: center center;
+  }
+
+  .container {
+    width: 580px;
+    margin-top: 6%;
+  }
+
+  .container h3 {
+    font-size: 18pt;
+  }
+
+  .body, .end-session {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .clues {
+    flex-wrap: wrap;
+    align-items: flex-start;
+    flex-direction: row;
+  }
+
+  .clue-box {
+    width: calc(50% - 40px);
+  }
+}
+
+nav,
+nav * {
+  color: #fff !important;
+}

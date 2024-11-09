@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Quiz App</title>
+
+  <!-- HTML -->
+
+
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="quiz.css">
+  <link rel="stylesheet" href="endSession.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <nav>
+    <div class="title-box">
+      <i data-lucide="align-left"></i>
+    </div>
+    <div class="right-icons">
+      <div class="subject" id="subject">Sociology</div>
+      <div class="score-item score-success" id="corrects">
+        10
+      </div>
+      <div class="score-item score-wrong" id="wrongs">
+        4
+      </div>
+      <div class="score-item score-points" id="points">
+        0
+      </div>
+    </div>
+  </nav>
+
+  <div class="body">
+    <div class="container">
+      <progress max="100" value="10" class="progress"></progress>
+      <div class="qes-box">
+        <div class="qes-info" id="qesInfo">Question 20<span class="sub-info">/50</span></div>
+        <div class="timer" id="timer">
+          30s
+        </div>
+        <h3 class="question" id="question">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati?</h3>
+      </div>
+
+      <div class="clues" id="clues">
+        <div class="clue-box success">
+          <div class="clue-symbol">A</div>
+          <div class="clue-text">Answer 1</div>
+        </div>
+        <div class="clue-box wrong">
+          <div class="clue-symbol">B</div>
+          <div class="clue-text">Answer 1</div>
+        </div>
+        <div class="clue-box outline-red">
+          <div class="clue-symbol">C</div>
+          <div class="clue-text">Answer 1</div>
+        </div>
+        <div class="clue-box">
+          <div class="clue-symbol">D</div>
+          <div class="clue-text">Answer 1</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="end-session">
+    <div class="container">
+      <div class="qes-box">
+        <center>
+          <div class="qes-info">Your Result: User Name - H2B</div>
+          <div class="points-info">
+            <h1>523.04</h1>
+            <div>Points Earned</div>
+          </div>
+        </center>
+        <div class="charts">
+          <div class="progress-circle" style="--progress: 80;">
+            <svg>
+              <circle class="bg" cx="75" cy="75" r="70"></circle>
+              <circle class="progress" cx="75" cy="75" r="70"></circle>
+            </svg>
+            <div class="percentage">80</div>
+          </div>
+          <div class="progress-circle" style="--progress: 20;">
+            <svg>
+              <circle class="bg" cx="75" cy="75" r="70"></circle>
+              <circle class="progress" cx="75" cy="75" r="70"></circle>
+            </svg>
+            <div class="percentage">20</div>
+          </div>
+        </div>
+        <div class="buttons">
+          <button class="circle-btn">
+            <i data-lucide="rotate-cw"></i>
+          </button>
+          <button class="circle-btn">
+            <i data-lucide="trophy"></i>
+          </button> <button class="circle-btn">
+            <i data-lucide="file"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Project -->
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  <script src="quiz.js"></script>
+  <script src="main.quiz.js"></script>
+  <script type="text/javascript" charset="utf-8" defer>
+    lucide.createIcons();
+  </script>
+</body>
+
+</html>
