@@ -1,9 +1,12 @@
 var clientData = {
-  userName: 'DemoUser',
-  subject: 'Software',
-  division: 'H2B',
+  userName: '',
+  subject: '',
+  division: '',
+  rollnum: '',
+  userId: '',
+
   askedQestions: [],
-  totalQes: 1,
+  totalQes: 25,
   currentQesData: null,
   timer: null,
   resultData: null,
@@ -13,24 +16,27 @@ var clientData = {
 
 
 class QuizResultData {
-  constructor(userName, division, subject) {
+  constructor(userName, division, subject, rollnum, id = '', results = []) {
     this.userName = userName;
     this.division = division;
     this.subject = subject;
-    this.results = [
-// demo
-//       {
-//         question: 'How many seconds in one minute?',
-//         elapsedTime: 30,
-//         totalTime: 60,
-//         isCorrect: true,
-//         submittedAnswerIndex: 3,
-//         clues: ['59.9', '0.60', '58', '60'],
-//         rightAnswerIndex: 3,
-//         alerts: 0,
-// }
+    this.rollnum = rollnum;
+    this.userId = id;
+    this.results = results;
+    //[
+    // demo
+    //       {
+    //         question: 'How many seconds in one minute?',
+    //         elapsedTime: 30,
+    //         totalTime: 60,
+    //         isCorrect: true,
+    //         submittedAnswerIndex: 3,
+    //         clues: ['59.9', '0.60', '58', '60'],
+    //         rightAnswerIndex: 3,
+    //         alerts: 0,
+    // }
 
-];
+    //];
     this.points = null;
     this.corrects = null;
     this.wrongs = null;
@@ -83,17 +89,31 @@ class QuizResultData {
 }
 
 function saveLocalData() {
-  // Tab to edit
+  localStorage.setItem('clientData', JSON.stringify(clientData));
+  localStorage.setItem('results', JSON.stringify(clientData.resultData));
 }
 
-function startQuiz(qesData, userName, subject, division) {
+function startQuiz(qesData, userName, subject, division, rollnum, userId) {
   resetAnswersStyle();
-  clientData.resultData = new QuizResultData(clientData.userName, clientData.division, clientData.subject);
-  updateProperties(clientData.subject, 0, 0, 0);
+  clientData.userName = userName;
+  clientData.userId = userId;
+  clientData.subject = subject;
+  clientData.division = division;
+  clientData.rollnum = rollnum;
+
+  var useResultData = (typeof clientData.resultData != 'undefined' ? clientData.resultData.results : [])
+
+  clientData.resultData = new QuizResultData(clientData.userName, clientData.division, clientData.subject, clientData.rollnum, clientData.userId, useResultData);
+  if (typeof clientData.resultData != 'undefined') {
+    clientData.resultData.calcValues()
+    updateProperties(clientData.subject, clientData.resultData.corrects, clientData.resultData.wrongs, clientData.resultData.points);
+  } else {
+    updateProperties(clientData.subject, 0, 0, 0);
+  }
   clientData.qesData = qesData;
   updateQuestionInfo(clientData.totalQes, clientData.askedQestions.length)
 
-  nextQuestion(qesData)
+  nextQuestion(qesData);
 }
 
 function nextQuestion(qesData) {
@@ -104,6 +124,7 @@ function nextQuestion(qesData) {
   var qes = uniqeArr[Math.floor(Math.random() * uniqeArr.length)];
   qes = shuffleCluesAndAdjustAnswer(qes);
 
+  saveLocalData();
   clientData.askedQestions.push(qes);
   clientData.currentQesData = qes;
   updateQuestion(qes.question, qes.clues);
@@ -118,7 +139,7 @@ function nextQuestion(qesData) {
     clientData.resultData.addValue(qes.question, qes.time, qes.time, false, (-1), qes.clues, qes.rightAnswerIndex, timer.alerted);
     clientData.resultData.calcValues();
 
-    if (clientData.totalQes <= clientData.resultData.results.length) {
+    if (isQuestionEnded()) {
       handleEndQuiz();
     } else {
       prepareNewQuestion();
@@ -164,6 +185,10 @@ function prepareNewQuestion() {
     resetAnswersStyle();
     nextQuestion(clientData.qesData);
   }, 2300)
+}
+
+function isQuestionEnded() {
+  return (clientData.totalQes <= clientData.resultData.results.length || clientData.qesData.length === clientData.askedQestions.length);
 }
 
 
@@ -253,7 +278,7 @@ function handleAnswerClick(e, el) {
   clientData.timer.stop();
   var elapsed = clientData.timer.elapsed;
   var totalSec = clientData.timer.totalTime;
-  var alerts = clientData.timer.alerts;
+  var alerts = clientData.timer.alerted;
   var qes = clientData.currentQesData;
   var isCorrect;
 
@@ -285,7 +310,7 @@ function handleAnswerClick(e, el) {
   clientData.resultData.addValue(qes.question, elapsed, totalSec, isCorrect, submitAnswerIndex, qes.clues, qes.rightAnswerIndex, alerts);
   clientData.resultData.calcValues();
   updateProperties(clientData.resultData.subject, clientData.resultData.corrects, clientData.resultData.wrongs, clientData.resultData.points);
-  if (clientData.totalQes <= clientData.resultData.results.length) {
+  if (isQuestionEnded()) {
     setTimeout(function() {
       handleEndQuiz();
     }, 2300);
@@ -298,7 +323,7 @@ function updateProperties(subject, corrects, wrongs, points = 0) {
   document.getElementById('corrects').innerHTML = corrects;
   document.getElementById('wrongs').innerHTML = wrongs;
   document.getElementById('subject').innerHTML = subject;
-  document.getElementById('points').innerHTML = points.toFixed() + 'p';
+  document.getElementById('points').innerHTML = parseInt(points).toFixed() + 'p';
 }
 
 function resetAnswersStyle() {

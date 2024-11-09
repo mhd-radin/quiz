@@ -36,3 +36,11 @@ button {
   border: 1px solid #86BFFF;
   border-radius: 8px;
 }
+
+#register {
+  display: block;
+}
+
+#quiz {
+  display: none;
+}

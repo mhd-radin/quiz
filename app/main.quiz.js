@@ -235,6 +235,32 @@ const qesData = [
     rightAnswerIndex: 1,
     time: 25
   }
-];;
+];
 
-startQuiz(qesData)
+if (localStorage.getItem('clientData')) {
+  clientData = JSON.parse(localStorage.getItem('clientData'));
+}
+
+if (localStorage.getItem('results')) {
+  clientData.resultData = JSON.parse(localStorage.getItem('results'));
+}
+
+if (!localStorage.getItem('client') || !localStorage.getItem('subject')) {
+  window.location.href = '../'
+} else {
+  var client = JSON.parse(localStorage.getItem('client'));
+  console.log(client)
+  var subject = localStorage.getItem('subject');
+  var arr = [];
+
+  bushido.realtime.get('quiz/' + subject).then(function(snapshot) {
+    var data = snapshot.val();
+    var keys = Object.keys(data).forEach(function(key) {
+      var qes = data[key];
+      qes.clues = getObjectValues(qes.clues);
+      arr.push(qes);
+    })
+
+    startQuiz(arr, client.name, subject, client.division, client.rollnum, client.id)
+  })
+}
