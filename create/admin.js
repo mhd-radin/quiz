@@ -19,7 +19,7 @@ function createItemHtml(id, qesTitle, qesClues = [], rightAnswerIndex) {
   qesClues.forEach(function(str, index) {
     clueString += '<li ' + (index == rightAnswerIndex ? 'class="success"' : '') + '>' + str + '</li>';
   })
-  return `
+  return new TagString(`
 <div class="qes" id=${id}>
   <div class="title">${qesTitle}</div>
   <ul>
@@ -29,7 +29,7 @@ function createItemHtml(id, qesTitle, qesClues = [], rightAnswerIndex) {
     <button class="ui icon button negative"> Delete </button>
   </div>
 </div>
-`
+`);
 }
 
 function addToTable(html) {
@@ -57,9 +57,11 @@ bushido.realtime.onSet('quiz', function(snapshot) {
       questions.forEach(function(qesId, qesIndex) {
         var qes = data[subject][qesId];
         var item = createItemHtml(qesId, ((qesIndex + 1) + '. ' + qes.question), getObjectValues(qes.clues), qes.rightAnswerIndex);
-        addToSession(subject, item);
+        var itElem = item.parseElement()[0];
+        
+        document.getElementById(subject).querySelector('.topic-body').appendChild(itElem)
 
-        document.getElementById(qesId).querySelector('button.negative').addEventListener('click', function() {
+        itElem.querySelector('button.negative').addEventListener('click', function() {
           bushido.realtime.set('quiz/' + subject + '/' + qesId, null);
         })
       })
