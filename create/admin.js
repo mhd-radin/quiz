@@ -4,14 +4,14 @@ var addBtn = document.getElementById('addBtn');
 
 
 function createSessionHtml(title) {
-  return `
+  return new TagString(`
 <div class="topic-session" id="${title}">
   <div class="topic-title">
     ${title}
   </div>
   <div class="topic-body">
   </div>
-</div>`
+</div>`)
 }
 
 function createItemHtml(id, qesTitle, qesClues = [], rightAnswerIndex) {
@@ -51,17 +51,18 @@ bushido.realtime.onSet('quiz', function(snapshot) {
     var subjects = Object.keys(data);
     subjects.forEach(function(subject) {
       var session = createSessionHtml(subject);
-      addToTable(session);
+      var subjectElem = session.parseElement()[0];
+      table.appendChild(subjectElem)
 
       var questions = Object.keys(data[subject]);
       questions.forEach(function(qesId, qesIndex) {
         var qes = data[subject][qesId];
         var item = createItemHtml(qesId, ((qesIndex + 1) + '. ' + qes.question), getObjectValues(qes.clues), qes.rightAnswerIndex);
         var itElem = item.parseElement()[0];
-        
-        document.getElementById(subject).querySelector('.topic-body').appendChild(itElem)
 
-        itElem.querySelector('button.negative').addEventListener('click', function() {
+        subjectElem.querySelector('.topic-body').appendChild(itElem)
+
+        itElem.querySelector('button').addEventListener('click', function() {
           bushido.realtime.set('quiz/' + subject + '/' + qesId, null);
         })
       })
@@ -116,6 +117,9 @@ addBtn.onclick = function() {
         })
 
       }
+      
+      $('.ui.modal').modal('hide');
+      return false;
     }
   }).modal('show')
 }
@@ -137,8 +141,9 @@ function clearUsersData() {
 }
 
 function addFromJSON(topic, dataInArray = []) {
-  bushido.realtime.set('quiz/'+topic, dataInArray)
+  bushido.realtime.set('quiz/' + topic, dataInArray)
 }
+
 
 // const Qestions = [
 //   {
