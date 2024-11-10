@@ -1,6 +1,11 @@
 var regBtn = document.getElementById('reg-btn');
 var quizBtn = document.getElementById('quiz-btn');
 
+function hideLoader() {
+  document.querySelector('.loader').style.display = 'none'
+}
+
+
 function formatString(str) {
   return str
     .toLowerCase() // Convert to lowercase
@@ -8,7 +13,7 @@ function formatString(str) {
     .replace(/[^a-z0-9_-]/g, ''); // Remove all characters except lowercase letters, numbers, underscores, and hyphens
 }
 
-if (localStorage.getItem('results') && localStorage.getItem('clientData')){
+if (localStorage.getItem('results') && localStorage.getItem('clientData')) {
   location.href = './app'
 }
 
@@ -46,11 +51,12 @@ regBtn.onclick = function() {
   }
 }
 
-bushido.realtime.get('quiz').then(function(snapshot){
+bushido.realtime.get('quiz').then(function(snapshot) {
+  hideLoader()
   var data = snapshot.val();
   var keys = Object.keys(data);
-  keys.forEach(function (subject) {
-    document.getElementById('subject').innerHTML += '<option value="'+subject+'">'+subject+'</option>'
+  keys.forEach(function(subject) {
+    document.getElementById('subject').innerHTML += '<option value="' + subject + '">' + subject + '</option>'
   })
 })
 

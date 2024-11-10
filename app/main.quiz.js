@@ -34,7 +34,8 @@ if (!localStorage.getItem('client') || !localStorage.getItem('subject')) {
         qes.clues = getObjectValues(qes.clues);
         arr.push(qes);
       })
-
+      
+      hideLoader()
       startQuiz(arr, client.name, subject, client.division, client.rollnum, client.id)
     })
   }

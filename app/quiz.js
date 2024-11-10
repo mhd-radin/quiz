@@ -109,6 +109,10 @@ function showReview() {
   }
 }
 
+function hideLoader() {
+  document.querySelector('.loader').style.display = 'none'
+}
+
 function editReview(username, division, points, totalQes, corrects, wrongs) {
   var info = document.getElementById('review-name');
   var pointsTag = document.getElementById('review-points');
@@ -116,14 +120,14 @@ function editReview(username, division, points, totalQes, corrects, wrongs) {
   var wrongsTag = document.getElementById('chart-wrongs')
 
   info.innerHTML = "Your Result: " + username + " - " + division;
-  pointsTag.innerHTML = parseInt(points).toFixed(2);
+  pointsTag.innerHTML = parseFloat(points).toFixed(2);
   var correctPercentage = 100 / (totalQes / corrects);
   correctsTag.style.setProperty('--progress', correctPercentage);
-  correctsTag.querySelector('.percentage').innerHTML = correctPercentage + '% <br> <div class="sm">' + corrects + ' Correct</div>';
+  correctsTag.querySelector('.percentage').innerHTML = correctPercentage.toFixed(2) + '% <br> <div class="sm">' + corrects + ' Correct</div>';
 
   var wrongsPercentage = 100 / (totalQes / wrongs);
   wrongsTag.style.setProperty('--progress', wrongsPercentage);
-  wrongsTag.querySelector('.percentage').innerHTML = wrongsPercentage + '% <br> <div class="sm">' + wrongs + ' Wrong</div>';
+  wrongsTag.querySelector('.percentage').innerHTML = wrongsPercentage.toFixed(2) + '% <br> <div class="sm">' + wrongs + ' Wrong</div>';
 }
 
 function startQuiz(qesData, userName, subject, division, rollnum, userId) {
@@ -221,7 +225,7 @@ function prepareNewQuestion() {
   setTimeout(function() {
     resetAnswersStyle();
     nextQuestion(clientData.qesData);
-  }, 2300)
+  }, 500)
 }
 
 function isQuestionEnded() {
@@ -372,7 +376,9 @@ function handleAnswerClick(e, el) {
       handleEndQuiz();
     }, 2300);
   } else {
-    prepareNewQuestion();
+    nextBtn.onclick = function() {
+      prepareNewQuestion();
+    }
   }
 }
 
@@ -380,7 +386,7 @@ function updateProperties(subject, corrects, wrongs, points = 0) {
   document.getElementById('corrects').innerHTML = corrects;
   document.getElementById('wrongs').innerHTML = wrongs;
   document.getElementById('subject').innerHTML = subject;
-  document.getElementById('points').innerHTML = parseInt(points).toFixed() + 'p';
+  document.getElementById('points').innerHTML = parseFloat(points).toFixed() + 'p';
 }
 
 function resetAnswersStyle() {
@@ -467,6 +473,7 @@ function startCountdown(sec) {
 var retryBtn = document.getElementById('retryBtn')
 var leaderBtn = document.getElementById('leaderBtn')
 var reviewBtn = document.getElementById('reviewBtn')
+var nextBtn = document.getElementById('nextQes')
 
 retryBtn.onclick = function() {
   localStorage.removeItem('clientData')

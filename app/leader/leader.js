@@ -7,7 +7,7 @@ function createUserHtml(name, division, rank, points, corrects, wrongs) {
         </div>
         <div class="box">
           <div class="username">${name} - ${division}</div>
-          <div class="subname">${parseInt(points).toFixed(2)} Points</div>
+          <div class="subname">${parseFloat(points).toFixed(2)} Points</div>
         </div>
 
         <div class="right-icons">
@@ -20,6 +20,10 @@ function createUserHtml(name, division, rank, points, corrects, wrongs) {
         </div>
       </div>
   `
+}
+
+function hideLoader() {
+  document.querySelector('.loader').style.display = 'none'
 }
 
 var table = document.getElementById('box');
@@ -45,14 +49,14 @@ function listOut(data, subject) {
   clearBody()
   var users = data[subject];
   var arr = getObjectValues(users);
-  arr = arr.sort(function (a, b) {
+  arr = arr.sort(function(a, b) {
     return b.points - a.points;
   });
-  arr.forEach(function (result, index) {
+  arr.forEach(function(result, index) {
     var html = createUserHtml(
       result.userName,
       result.division,
-      (index+1),
+      (index + 1),
       result.points,
       result.corrects,
       result.wrongs)
@@ -61,6 +65,7 @@ function listOut(data, subject) {
 }
 
 bushido.realtime.get('quizLeader').then(function(snapshot) {
+  hideLoader()
   saveSnapshot = snapshot.val();
   subjectInp.innerHTML = '';
   if (snapshot.exists()) {
@@ -68,7 +73,7 @@ bushido.realtime.get('quizLeader').then(function(snapshot) {
     subjects.forEach(function(subject) {
       addValueToInp(subject, subject)
     });
-    
+
     listOut(saveSnapshot, subjectInp.value);
     subjectInp.onchange = function() {
       var subjectValue = document.getElementById('subject').value;

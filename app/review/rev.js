@@ -1,6 +1,9 @@
 var table = document.getElementById('table');
 var topic = document.getElementById('topic');
 
+function hideLoader() {
+  document.querySelector('.loader').style.display = 'none'
+}
 
 function createSessionHtml(title) {
   return `
@@ -45,6 +48,7 @@ if (localStorage.getItem('client')) {
   var id = JSON.parse(localStorage.getItem('client')).id;
   bushido.realtime.onSet('quizResults/' + id, function(snapshot) {
     var data = snapshot.val();
+    hideLoader();
     clearBody()
     if (snapshot.exists()) {
       var subjects = Object.keys(data);
