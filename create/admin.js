@@ -135,3 +135,7 @@ function clearUsersData() {
   bushido.realtime.set('quizLeader', null);
   bushido.realtime.set('quizResults', null)
 }
+
+function addFromJSON(topic, dataInArray = []) {
+  bushido.realtime.set('quiz/'+topic, dataInArray)
+}
