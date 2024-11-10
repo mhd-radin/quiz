@@ -116,7 +116,7 @@ function editReview(username, division, points, totalQes, corrects, wrongs) {
   var wrongsTag = document.getElementById('chart-wrongs')
 
   info.innerHTML = "Your Result: " + username + " - " + division;
-  pointsTag.innerHTML = points;
+  pointsTag.innerHTML = parseInt(points).toFixed(2);
   var correctPercentage = 100 / (totalQes / corrects);
   correctsTag.style.setProperty('--progress', correctPercentage);
   correctsTag.querySelector('.percentage').innerHTML = correctPercentage + '% <br> <div class="sm">' + corrects + ' Correct</div>';

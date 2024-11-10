@@ -7,7 +7,7 @@ function createUserHtml(name, division, rank, points, corrects, wrongs) {
         </div>
         <div class="box">
           <div class="username">${name} - ${division}</div>
-          <div class="subname">${points} Points</div>
+          <div class="subname">${parseInt(points).toFixed(2)} Points</div>
         </div>
 
         <div class="right-icons">

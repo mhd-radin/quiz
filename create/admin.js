@@ -56,9 +56,9 @@ bushido.realtime.onSet('quiz', function(snapshot) {
       var questions = Object.keys(data[subject]);
       questions.forEach(function(qesId, qesIndex) {
         var qes = data[subject][qesId];
-        var item = createItemHtml(qesId, ((qesIndex+1)+'. '+qes.question), getObjectValues(qes.clues), qes.rightAnswerIndex);
+        var item = createItemHtml(qesId, ((qesIndex + 1) + '. ' + qes.question), getObjectValues(qes.clues), qes.rightAnswerIndex);
         addToSession(subject, item);
-        
+
         document.getElementById(qesId).querySelector('button.negative').addEventListener('click', function() {
           bushido.realtime.set('quiz/' + subject + '/' + qesId, null);
         })
@@ -85,9 +85,9 @@ addBtn.onclick = function() {
 
       } else if (!qes) {
 
-      } else if (!correct){
-        
-      }else if (!time) {
+      } else if (!correct) {
+
+      } else if (!time) {
 
       } else if (!optA) {
 
@@ -97,7 +97,7 @@ addBtn.onclick = function() {
         var data = {
           question: qes,
           clues: [optA, optB],
-          rightAnswerIndex: (correct-1),
+          rightAnswerIndex: (correct - 1),
           time: time,
           id: ('QES_' + Math.floor(Math.random() * 99999))
         }
@@ -118,3 +118,18 @@ addBtn.onclick = function() {
   }).modal('show')
 }
 
+function clearAllData() {
+  bushido.realtime.set('quiz', null);
+  bushido.realtime.set('quizLeader', null);
+  bushido.realtime.set('quizResults', null)
+}
+
+function clearQuestionData() {
+  bushido.realtime.set('quiz', null);
+}
+
+function clearUsersData() {
+  bushido.realtime.set('quiz', null);
+  bushido.realtime.set('quizLeader', null);
+  bushido.realtime.set('quizResults', null)
+}
