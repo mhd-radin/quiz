@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="endSession.css">
   <script src="https://unpkg.com/lucide@latest"></script>
 </head>
+
 <body>
   <nav>
     <div class="title-box">
@@ -36,7 +37,7 @@
   </nav>
 
   <div class="body">
-    <div class="container">
+    <div class="container" id="quiz">
       <progress max="100" value="10" class="progress"></progress>
       <div class="qes-box">
         <div class="qes-info" id="qesInfo">Question 20<span class="sub-info">/50</span></div>
@@ -67,25 +68,25 @@
     </div>
   </div>
 
-  <div class="end-session">
+  <div class="end-session" id="review">
     <div class="container">
       <div class="qes-box">
         <center>
-          <div class="qes-info">Your Result: User Name - H2B</div>
+          <div class="qes-info" id="review-name">Your Result: User Name - H2B</div>
           <div class="points-info">
-            <h1>523.04</h1>
+            <h1 id="review-points">523.04</h1>
             <div>Points Earned</div>
           </div>
         </center>
         <div class="charts">
-          <div class="progress-circle" style="--progress: 80;">
+          <div id="chart-corrects" class="progress-circle" style="--progress: 80;">
             <svg>
               <circle class="bg" cx="75" cy="75" r="70"></circle>
               <circle class="progress" cx="75" cy="75" r="70"></circle>
             </svg>
             <div class="percentage">80</div>
           </div>
-          <div class="progress-circle" style="--progress: 20;">
+          <div id="chart-wrongs" class="progress-circle" style="--progress: 20;">
             <svg>
               <circle class="bg" cx="75" cy="75" r="70"></circle>
               <circle class="progress" cx="75" cy="75" r="70"></circle>
@@ -94,12 +95,13 @@
           </div>
         </div>
         <div class="buttons">
-          <button class="circle-btn">
+          <button class="circle-btn" id="retryBtn">
             <i data-lucide="rotate-cw"></i>
           </button>
-          <button class="circle-btn">
+          <button class="circle-btn" id="leaderBtn">
             <i data-lucide="trophy"></i>
-          </button> <button class="circle-btn">
+          </button> 
+          <button class="circle-btn" id="reviewBtn">
             <i data-lucide="file"></i>
           </button>
         </div>
@@ -110,7 +112,7 @@
   <!-- Project -->
 
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
-    <script src="bushido.js"></script>
+  <script src="bushido.js"></script>
   <script src="quiz.js"></script>
   <script src="main.quiz.js"></script>
   <script type="text/javascript" charset="utf-8" defer>

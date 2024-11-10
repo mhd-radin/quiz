@@ -79,7 +79,7 @@
 }
 
 .progress-circle .progress {
-  stroke: #4caf50;
+  stroke: #4CAF50;
   stroke-linecap: round;
   stroke-dasharray: 440;
   stroke-dashoffset: calc(440 - (440 * var(--progress)) / 100);
@@ -138,4 +138,25 @@
 
 .buttons button:nth-child(3) {
   background: #36B634;
+}
+
+.sm {
+  font-size: 11px;
+  color: #5097EE;
+  margin: 0;
+  padding: 0;
+}
+
+.progress-circle:nth-child(1) .sm {
+  font-size: 11px;
+  color: #4CAF50;
+  margin: 0;
+  padding: 0;
+}
+
+.progress-circle:nth-child(2) .sm {
+  font-size: 11px;
+  color: #EE507D;
+  margin: 0;
+  padding: 0;
 }

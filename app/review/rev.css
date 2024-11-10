@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap');
-@import url("../cdn_modules/animate.css@4.1.1/animate.min.css");
-@import url("../cdn_modules/semantic-ui@2.5.0/semantic.min.css");
+@import url("../../cdn_modules/animate.css@4.1.1/animate.min.css");
+@import url("../../cdn_modules/semantic-ui@2.5.0/semantic.min.css");
 
 body {
   font-family: "Lexend", sans-serif;
@@ -16,7 +16,7 @@ body {
 }
 
 .topic-title {
-  background: #1A354C;
+  background: #3F7AAC;
   color: #fff;
   font-size: 20px;
   padding: 10px;
@@ -51,6 +51,18 @@ body {
   bottom: 0;
   left: 0;
   padding: 3px;
+}
+
+.ua {
+  color: #773FAC;
+}
+
+.ra {
+  color: #3FAC53;
+}
+
+.wa {
+  color: #DF5858;
 }
 
 ::-webkit-scrollbar {

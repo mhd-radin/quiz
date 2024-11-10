@@ -44,3 +44,7 @@ button {
 #quiz {
   display: none;
 }
+
+::-webkit-scrollbar {
+  display: none;
+}

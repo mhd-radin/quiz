@@ -93,6 +93,34 @@ function saveLocalData() {
   localStorage.setItem('results', JSON.stringify(clientData.resultData));
 }
 
+function showQuiz() {
+  document.getElementById('review').style.display = 'none'
+  document.getElementById('quiz').style.display = 'block'
+}
+
+function showReview() {
+  document.getElementById('review').style.display = 'block'
+  document.getElementById('quiz').style.display = 'none'
+}
+
+function editReview(username, division, points, totalQes, corrects, wrongs) {
+  var info = document.getElementById('review-name');
+  var pointsTag = document.getElementById('review-points');
+  var correctsTag = document.getElementById('chart-corrects')
+  var wrongsTag = document.getElementById('chart-wrongs')
+
+  info.innerHTML = "Your Result: " + username + " - " + division;
+  pointsTag.innerHTML = points;
+  var correctPercentage = 100 / (totalQes / corrects);
+  console.log(corrects, totalQes)
+  correctsTag.style.setProperty('--progress', correctPercentage);
+  correctsTag.querySelector('.percentage').innerHTML = correctPercentage + '% <br> <div class="sm">' + corrects + ' Correct</div>';
+
+  var wrongsPercentage = 100 / (totalQes / wrongs);
+  wrongsTag.style.setProperty('--progress', wrongsPercentage);
+  wrongsTag.querySelector('.percentage').innerHTML = wrongsPercentage + '% <br> <div class="sm">' + wrongs + ' Wrong</div>';
+}
+
 function startQuiz(qesData, userName, subject, division, rollnum, userId) {
   resetAnswersStyle();
   clientData.userName = userName;
@@ -101,10 +129,14 @@ function startQuiz(qesData, userName, subject, division, rollnum, userId) {
   clientData.division = division;
   clientData.rollnum = rollnum;
 
-  var useResultData = (typeof clientData.resultData != 'undefined' ? clientData.resultData.results : [])
+  if (clientData.totalQes >= qesData.length) {
+    clientData.totalQes = qesData.length;
+  }
+
+  var useResultData = ((typeof clientData.resultData != 'undefined' && clientData.resultData) ? clientData.resultData.results : [])
 
   clientData.resultData = new QuizResultData(clientData.userName, clientData.division, clientData.subject, clientData.rollnum, clientData.userId, useResultData);
-  if (typeof clientData.resultData != 'undefined') {
+  if (typeof clientData.resultData != 'undefined' && clientData.resultData) {
     clientData.resultData.calcValues()
     updateProperties(clientData.subject, clientData.resultData.corrects, clientData.resultData.wrongs, clientData.resultData.points);
   } else {
@@ -224,6 +256,17 @@ function handleCorrectAnswer(sai) {
 }
 
 function handleEndQuiz() {
+  clientData.end = true;
+  var resultData = clientData.resultData;
+  saveLocalData();
+  bushido.realtime.set('quizResults/' + clientData.userId + '/' + clientData.subject, clientData.resultData);
+  editReview(
+      resultData.userName,
+      resultData.division, 
+      resultData.points,
+      resultData.results.length,
+      resultData.corrects,
+      resultData.wrongs)
   document.querySelector('.body').style.display = 'none'
   document.querySelector('.end-session').style.display = 'block'
 
@@ -405,4 +448,22 @@ function startCountdown(sec) {
   }, 1000)
 
   return rt;
+}
+
+var retryBtn = document.getElementById('retryBtn')
+var leaderBtn = document.getElementById('leaderBtn')
+var reviewBtn = document.getElementById('reviewBtn')
+
+retryBtn.onclick = function() {
+  localStorage.removeItem('clientData')
+  localStorage.removeItem('results')
+  location.href = '../'
+}
+
+leaderBtn.onclick = function() {
+  location.href = 'leader'
+}
+
+reviewBtn.onclick = function() {
+  location.href = 'review'
 }

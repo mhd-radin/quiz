@@ -47,9 +47,6 @@ nav {
   color: #0F2336;
   margin: 5px;
   margin-right: 17px;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
   outline: none;
   border: none;
   background: transparent;
@@ -174,4 +171,8 @@ svg {
 nav,
 nav * {
   color: #163048 !important;
+}
+
+::-webkit-scrollbar {
+  display: none;
 }
