@@ -8,6 +8,10 @@ function formatString(str) {
     .replace(/[^a-z0-9_-]/g, ''); // Remove all characters except lowercase letters, numbers, underscores, and hyphens
 }
 
+if (localStorage.getItem('results') && localStorage.getItem('clientData')){
+  location.href = './app'
+}
+
 function updateModals() {
   if (localStorage.getItem('client')) {
     document.getElementById('register').style.display = 'none'

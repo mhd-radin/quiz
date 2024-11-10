@@ -96,11 +96,17 @@ function saveLocalData() {
 function showQuiz() {
   document.getElementById('review').style.display = 'none'
   document.getElementById('quiz').style.display = 'block'
+  if (window.innerWidth > 650) {
+    document.getElementById('quiz').style.display = 'flex'
+  }
 }
 
 function showReview() {
   document.getElementById('review').style.display = 'block'
   document.getElementById('quiz').style.display = 'none'
+  if (window.innerWidth > 650) {
+    document.getElementById('review').style.display = 'flex'
+  }
 }
 
 function editReview(username, division, points, totalQes, corrects, wrongs) {
@@ -260,13 +266,23 @@ function handleEndQuiz() {
   var resultData = clientData.resultData;
   saveLocalData();
   bushido.realtime.set('quizResults/' + clientData.userId + '/' + clientData.subject, clientData.resultData);
+  var leaderData = {
+    wrongs: resultData.wrongs,
+    corrects: resultData.corrects,
+    points: resultData.points,
+    userId: clientData.userId,
+    userName: clientData.userName,
+    division: clientData.division,
+    rollnum: clientData.rollnum,
+  }
+  bushido.realtime.set('quizLeader/' + clientData.subject + '/' + clientData.userId, leaderData);
   editReview(
-      resultData.userName,
-      resultData.division, 
-      resultData.points,
-      resultData.results.length,
-      resultData.corrects,
-      resultData.wrongs)
+    resultData.userName,
+    resultData.division,
+    resultData.points,
+    resultData.results.length,
+    resultData.corrects,
+    resultData.wrongs)
   document.querySelector('.body').style.display = 'none'
   document.querySelector('.end-session').style.display = 'block'
 

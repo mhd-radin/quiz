@@ -13,10 +13,11 @@ function createSessionHtml(title) {
 </div>`
 }
 
-function createItemHtml(id, qesTitle, userAnswer, rightAnswer, isCorrect) {
+function createItemHtml(id, qesTitle, userAnswer, rightAnswer, isCorrect, elapsedTime) {
   var clueString = '';
   clueString += '<li class="'+(isCorrect ? 'ua': 'wa')+'"> <b> Your Answer: </b>' + userAnswer + '</li>';
   clueString += '<li class="ra"> <b> Right Answer: </b>' + rightAnswer + '</li>';
+  clueString += '<p >' + elapsedTime + ' Seconds elapsed</p>';
   return `
 <div class="item" id="${id}">
   <h3 class="ui block header">
@@ -56,7 +57,7 @@ if (localStorage.getItem('client')) {
         questions.forEach(function(qesId) {
           var qes = data[subject].results[qesId];
           var clues = getObjectValues(qes.clues);
-          var item = createItemHtml(qesId, qes.question, clues[qes.submittedAnswerIndex], clues[qes.rightAnswerIndex], qes.isCorrect);
+          var item = createItemHtml(qesId, qes.question, clues[qes.submittedAnswerIndex], clues[qes.rightAnswerIndex], qes.isCorrect, qes.elapsedTime);
           addToSession(subject, item);
         })
       })
