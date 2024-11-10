@@ -46,7 +46,6 @@ if (localStorage.getItem('client')) {
   bushido.realtime.onSet('quizResults/' + id, function(snapshot) {
     var data = snapshot.val();
     clearBody()
-    console.log(data)
     if (snapshot.exists()) {
       var subjects = Object.keys(data);
       subjects.forEach(function(subject) {

@@ -118,7 +118,6 @@ function editReview(username, division, points, totalQes, corrects, wrongs) {
   info.innerHTML = "Your Result: " + username + " - " + division;
   pointsTag.innerHTML = points;
   var correctPercentage = 100 / (totalQes / corrects);
-  console.log(corrects, totalQes)
   correctsTag.style.setProperty('--progress', correctPercentage);
   correctsTag.querySelector('.percentage').innerHTML = correctPercentage + '% <br> <div class="sm">' + corrects + ' Correct</div>';
 
@@ -352,7 +351,6 @@ function handleAnswerClick(e, el) {
 
     //submitAnswerIndex = dic[e.target.id];
   }
-  console.log(submitAnswerIndex);
 
   if (qes.rightAnswerIndex === submitAnswerIndex) {
     isCorrect = true;

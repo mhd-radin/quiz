@@ -54,9 +54,9 @@ bushido.realtime.onSet('quiz', function(snapshot) {
       addToTable(session);
 
       var questions = Object.keys(data[subject]);
-      questions.forEach(function(qesId) {
+      questions.forEach(function(qesId, qesIndex) {
         var qes = data[subject][qesId];
-        var item = createItemHtml(qesId, qes.question, getObjectValues(qes.clues), qes.rightAnswerIndex);
+        var item = createItemHtml(qesId, ((qesIndex+1)+'. '+qes.question), getObjectValues(qes.clues), qes.rightAnswerIndex);
         addToSession(subject, item);
         
         document.getElementById(qesId).querySelector('button.negative').addEventListener('click', function() {
@@ -117,3 +117,4 @@ addBtn.onclick = function() {
     }
   }).modal('show')
 }
+
