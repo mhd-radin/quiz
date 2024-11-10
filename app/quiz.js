@@ -119,15 +119,27 @@ function editReview(username, division, points, totalQes, corrects, wrongs) {
   var correctsTag = document.getElementById('chart-corrects')
   var wrongsTag = document.getElementById('chart-wrongs')
 
+  var quotes = [
+"Attempt is the first step towards success!",
+"Every attempt is a step closer to victory!",
+"You tried, and that's what matters!",
+"Don't worry about failure, worry about not trying!",
+"Attempted, not failed. There's a difference!",
+"Don't be afraid to try again. Every attempt gets you closer!",
+    ]
+
+  var randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+  document.getElementById('quote').innerHTML = '"' + randomQuote + '"';
+
   info.innerHTML = "Your Result: " + username + " - " + division;
   pointsTag.innerHTML = parseFloat(points).toFixed(2);
   var correctPercentage = 100 / (totalQes / corrects);
   correctsTag.style.setProperty('--progress', correctPercentage);
-  correctsTag.querySelector('.percentage').innerHTML = correctPercentage.toFixed(2) + '% <br> <div class="sm">' + corrects + ' Correct</div>';
+  correctsTag.querySelector('.percentage').innerHTML = correctPercentage.toFixed(1) + '% <br> <div class="sm">' + corrects + ' Correct</div>';
 
   var wrongsPercentage = 100 / (totalQes / wrongs);
   wrongsTag.style.setProperty('--progress', wrongsPercentage);
-  wrongsTag.querySelector('.percentage').innerHTML = wrongsPercentage.toFixed(2) + '% <br> <div class="sm">' + wrongs + ' Wrong</div>';
+  wrongsTag.querySelector('.percentage').innerHTML = wrongsPercentage.toFixed(1) + '% <br> <div class="sm">' + wrongs + ' Wrong</div>';
 }
 
 function startQuiz(qesData, userName, subject, division, rollnum, userId) {
@@ -222,6 +234,9 @@ function shuffleCluesAndAdjustAnswer(question) {
 
 
 function prepareNewQuestion() {
+  clientData.timer.stop();
+  nextBtn.onclick = function() {
+  }
   setTimeout(function() {
     resetAnswersStyle();
     nextQuestion(clientData.qesData);
@@ -265,6 +280,7 @@ function handleCorrectAnswer(sai) {
 }
 
 function handleEndQuiz() {
+  clientData.timer.stop();
   clientData.end = true;
   var resultData = clientData.resultData;
   saveLocalData();
@@ -445,19 +461,19 @@ function startCountdown(sec) {
     totalTime: sec,
   }
   var time = 0;
-  var timer = setInterval(function() {
+  let timerStop = setInterval(function() {
     time += 1;
     rt.elapsed = time;
     rt.update(time);
     rt.stop = function() {
       timerElem.style.animation = 'none'
-      clearInterval(timer);
+      clearInterval(timerStop);
     }
     timerElem.innerHTML = (sec - time) + "s"
     if (time >= sec) {
       rt.timeup();
       timerElem.style.animation = 'none'
-      clearInterval(timer);
+      clearInterval(timerStop);
     }
 
     if ((time + 10) >= sec) {
