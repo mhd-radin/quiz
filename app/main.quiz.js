@@ -14,6 +14,7 @@ if (!localStorage.getItem('client') || !localStorage.getItem('subject')) {
   if (clientData.end) {
     var resultData = JSON.parse(localStorage.getItem('results'));
     showReview()
+    hideLoader();
     editReview(
       resultData.userName,
       resultData.division, 

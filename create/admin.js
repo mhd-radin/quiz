@@ -139,3 +139,50 @@ function clearUsersData() {
 function addFromJSON(topic, dataInArray = []) {
   bushido.realtime.set('quiz/'+topic, dataInArray)
 }
+
+// const Qestions = [
+//   {
+//     question: "Which animal’s fingerprints are almost identical to humans?",
+//     clues: ["Gorilla", "Koala", "Elephant", "Chimpanzee"],
+//     rightAnswerIndex: 1,
+//     time: 60
+//   },
+//   {
+//     question: "How many legs does a lobster have?",
+//     clues: ["6", "8", "10", "12"],
+//     rightAnswerIndex: 2,
+//     time: 60
+//   },
+//   {
+//     question: "Which animal never sleeps?",
+//     clues: ["Jellyfish", "Shark", "Dolphin", "Bullfrog"],
+//     rightAnswerIndex: 3,
+//     time: 60
+//   },
+//   {
+//     question: "What is the only known venomous primate?",
+//     clues: ["Chimpanzee", "Slow Loris", "Baboon", "Gibbon"],
+//     rightAnswerIndex: 1,
+//     time: 60
+//   },
+//   {
+//     question: "Which animal has blue blood?",
+//     clues: ["Horse", "Octopus", "Human", "Dog"],
+//     rightAnswerIndex: 1,
+//     time: 60
+//   },
+//   {
+//     question: "How many hearts does a hagfish have?",
+//     clues: ["1", "2", "3", "4"],
+//     rightAnswerIndex: 3,
+//     time: 60
+//   },
+//   {
+//     question: "Which bird is known to mimic almost any sound, including chainsaws?",
+//     clues: ["Mockingbird", "Parrot", "Lyrebird", "Crow"],
+//     rightAnswerIndex: 2,
+//     time: 60
+//   }
+// ];
+
+// addFromJSON('Wild Animals', Qestions)
