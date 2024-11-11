@@ -18,6 +18,17 @@
 
 <body>
 
+  <div class="bottom">
+    <div class="ui search selection dropdown" id="customDropdown">
+      <input type="hidden" name="dropdown" id="topic">
+      <i class="dropdown icon"></i>
+      <div class="default text">Subject Or Topic Id</div>
+      <div class="menu" id="optBox">
+      </div>
+    </div>
+    <button class="ui button" id="addBtn">Add</button>
+  </div>
+
   <div class="table" id="table">
     <div class="topic-session">
       <div class="topic-title">
@@ -32,38 +43,38 @@
       <div class="ui input">
         <textarea type="text" id="qes" placeholder="Question" rows="3" cols="30"></textarea>
       </div>
-      <div class="ui right labeled input">
+      <div class="ui right labeled input fluid">
         <input type="number" placeholder="Time" id="time">
         <div class="ui basic label">
           Sec
         </div>
       </div>
 
-      <div class="ui labeled input">
+      <div class="ui labeled input fluid">
         <div class="ui label">
           A
         </div>
         <input type="text" placeholder="Option A" id="optA">
       </div>
-      <div class="ui labeled input">
+      <div class="ui labeled input fluid">
         <div class="ui label">
           B
         </div>
         <input type="text" placeholder="Option B" id="optB">
       </div>
-      <div class="ui labeled input">
+      <div class="ui labeled input fluid">
         <div class="ui label">
           C
         </div>
         <input type="text" placeholder="Option C" id="optC">
       </div>
-      <div class="ui labeled input">
+      <div class="ui labeled input fluid">
         <div class="ui label">
           D
         </div>
         <input type="text" placeholder="Option D" id="optD">
       </div>
-      <div class="ui labeled input">
+      <div class="ui labeled input fluid">
         <div class="ui label">
           Right Answer
         </div>
@@ -76,12 +87,8 @@
     </div>
   </div>
 
-  <div class="bottom">
-    <div class="ui input focusable">
-      <input type="text" placeholder="topic id" id="topic">
-    </div>
-    <button class="ui button" id="addBtn">Add</button>
-  </div>
+
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script type="text/javascript" src="../cdn_modules/semantic-ui@2.5.0/semantic.min.js"></script>
   <script src="../app/bushido.js"></script>

@@ -9,6 +9,7 @@ body {
 
 .table {
   overflow: scroll;
+  height: 100vh;
 }
 
 .topic-session {
@@ -23,7 +24,8 @@ body {
 }
 
 .topic-body {
-  display: flex;flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .qes {
@@ -49,14 +51,14 @@ body {
 .bottom {
   position: sticky;
   position: -webkit-sticky;
-  bottom: 0;
+  top: 0;
   left: 0;
   padding: 3px;
   background: #1A354C;
   width: calc(100% - 3px);
 }
 
-.bottom .input {
+.bottom .search {
   width: calc(100% - 85px);
 }
 

@@ -49,7 +49,12 @@ bushido.realtime.onSet('quiz', function(snapshot) {
   clearBody()
   if (snapshot.exists()) {
     var subjects = Object.keys(data);
+    
+    document.getElementById('optBox').innerHTML = '';
     subjects.forEach(function(subject) {
+      document.getElementById('optBox').innerHTML += `<div class="item" data-value="${subject}">${subject}</div>`
+      
+      
       var session = createSessionHtml(subject);
       var subjectElem = session.parseElement()[0];
       table.appendChild(subjectElem)
@@ -144,6 +149,10 @@ function addFromJSON(topic, dataInArray = []) {
   bushido.realtime.set('quiz/' + topic, dataInArray)
 }
 
+
+$('#customDropdown').dropdown({
+  allowAdditions: true
+});
 
 // const Qestions = [
 //   {
