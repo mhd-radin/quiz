@@ -92,6 +92,7 @@ svg {
   border-radius: 12px;
   box-shadow: 0 0 8px #ccc;
   padding-top: 25px;
+  overflow-wrap: break-word;
 }
 
 .container progress {
@@ -261,6 +262,7 @@ svg {
   border-radius: 8px;
   padding: 13px 25px;
   margin: 3px;
+  margin-right: 8px;
   outline: none;
   border: none;
 }
@@ -353,6 +355,7 @@ svg {
   .container {
     width: 580px;
     margin-top: 6%;
+    flex-direction: column;
   }
 
   .container h3 {

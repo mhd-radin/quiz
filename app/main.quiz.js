@@ -17,7 +17,7 @@ if (!localStorage.getItem('client') || !localStorage.getItem('subject')) {
     hideLoader();
     editReview(
       resultData.userName,
-      resultData.division, 
+      resultData.division,
       resultData.points,
       resultData.results.length,
       resultData.corrects,
@@ -30,14 +30,17 @@ if (!localStorage.getItem('client') || !localStorage.getItem('subject')) {
 
     bushido.realtime.get('quiz/' + subject).then(function(snapshot) {
       var data = snapshot.val();
-      var keys = Object.keys(data).forEach(function(key) {
-        var qes = data[key];
-        qes.clues = getObjectValues(qes.clues);
-        arr.push(qes);
-      })
-      
-      hideLoader()
-      startQuiz(arr, client.name, subject, client.division, client.rollnum, client.id)
+      if (snapshot.exists()) {
+        var keys = Object.keys(data).forEach(function(key) {
+          var qes = data[key];
+          qes.clues = getObjectValues(qes.clues);
+          arr.push(qes);
+        })
+        hideLoader()
+        startQuiz(arr, client.name, subject, client.division, client.rollnum, client.id)
+      } else {
+        window.location.href = '../'
+      }
     })
   }
 }
