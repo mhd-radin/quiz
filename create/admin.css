@@ -17,7 +17,7 @@ body {
 }
 
 .topic-title {
-  background: #1A354C;
+  background: #25679F;
   color: #fff;
   font-size: 20px;
   padding: 10px;
@@ -54,7 +54,7 @@ body {
   top: 0;
   left: 0;
   padding: 3px;
-  background: #1A354C;
+  background: #25679F;
   width: calc(100% - 3px);
 }
 
