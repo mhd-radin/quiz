@@ -235,6 +235,14 @@ svg {
   background: #FFE3E3;
 }
 
+#message {
+  color: #1E3A56;
+  font-size: 14px;
+  margin: 7px;
+  margin-left: 25px;
+  margin-right: 25px;
+}
+
 
 .clue-box.outline-red .clue-symbol {
   background: #FFA8A8;

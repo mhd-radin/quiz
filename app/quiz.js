@@ -130,6 +130,7 @@ function editReview(username, division, points, totalQes, corrects, wrongs) {
 
   var randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
   document.getElementById('quote').innerHTML = '<strong>"' + randomQuote + '"</strong';
+document.getElementById('message').innerHTML = 'Click trophy button to see your rank in "'+(clientData.subject)+'" quiz!'
 
   info.innerHTML = "Your Result: " + username + " - " + division;
   pointsTag.innerHTML = parseFloat(points).toFixed(2);
@@ -239,7 +240,7 @@ function prepareNewQuestion() {
   setTimeout(function() {
     resetAnswersStyle();
     nextQuestion(clientData.qesData);
-  }, 500)
+  }, 1650)
 }
 
 function isQuestionEnded() {
