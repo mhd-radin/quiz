@@ -185,6 +185,7 @@ svg {
   display: flex;
   flex-direction: row;
   align-items: center;
+  overflow-wrap: break-word;
 }
 
 .clue-symbol {
@@ -194,6 +195,10 @@ svg {
   border-radius: 50%;
   width: 20px;
   height: 20px;
+  min-width: 20px;
+  min-height: 20px;
+  max-width: 20px;
+  max-height: 20px;
   font-size: 12px;
   display: flex;
   justify-content: center;
