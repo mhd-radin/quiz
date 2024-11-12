@@ -46,15 +46,15 @@ function clearBody() {
 
 bushido.realtime.onSet('quiz', function(snapshot) {
   var data = snapshot.val();
-  clearBody()
+  clearBody();
   if (snapshot.exists()) {
     var subjects = Object.keys(data);
-    
+
     document.getElementById('optBox').innerHTML = '';
     subjects.forEach(function(subject) {
       document.getElementById('optBox').innerHTML += `<div class="item" data-value="${subject}">${subject}</div>`
-      
-      
+
+
       var session = createSessionHtml(subject);
       var subjectElem = session.parseElement()[0];
       table.appendChild(subjectElem)
@@ -122,7 +122,7 @@ addBtn.onclick = function() {
         })
 
       }
-      
+
       $('.ui.modal').modal('hide');
       return false;
     }
@@ -153,6 +153,10 @@ function addFromJSON(topic, dataInArray = []) {
 $('#customDropdown').dropdown({
   allowAdditions: true
 });
+
+document.getElementById('topic').onchange = function() {
+  window.location.href = '#' + document.getElementById('topic').value;
+}
 
 // const Qestions = [
 //   {

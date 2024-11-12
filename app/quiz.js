@@ -129,7 +129,7 @@ function editReview(username, division, points, totalQes, corrects, wrongs) {
     ]
 
   var randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
-  document.getElementById('quote').innerHTML = '"' + randomQuote + '"';
+  document.getElementById('quote').innerHTML = '<strong>"' + randomQuote + '"</strong';
 
   info.innerHTML = "Your Result: " + username + " - " + division;
   pointsTag.innerHTML = parseFloat(points).toFixed(2);
@@ -235,8 +235,7 @@ function shuffleCluesAndAdjustAnswer(question) {
 
 function prepareNewQuestion() {
   clientData.timer.stop();
-  nextBtn.onclick = function() {
-  }
+  nextBtn.onclick = function() {}
   setTimeout(function() {
     resetAnswersStyle();
     nextQuestion(clientData.qesData);
@@ -294,7 +293,12 @@ function handleEndQuiz() {
     division: clientData.division,
     rollnum: clientData.rollnum,
   }
-  bushido.realtime.set('quizLeader/' + clientData.subject + '/' + clientData.userId, leaderData);
+  bushido.realtime.get('quizLeader/' + clientData.subject + '/' + clientData.userId).then(function(snapshot) {
+    var data = snapshot.val();
+    if ((!snapshot.exists()) || data.points < leaderData.points) {
+      bushido.realtime.set('quizLeader/' + clientData.subject + '/' + clientData.userId, leaderData);
+    }
+  });
   editReview(
     resultData.userName,
     resultData.division,
@@ -302,6 +306,7 @@ function handleEndQuiz() {
     resultData.results.length,
     resultData.corrects,
     resultData.wrongs)
+
   document.querySelector('.body').style.display = 'none'
   document.querySelector('.end-session').style.display = 'block'
 
