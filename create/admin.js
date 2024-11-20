@@ -232,6 +232,28 @@ document.getElementById('topic').onchange = function() {
   window.location.href = '#' + document.getElementById('topic').value;
 }
 
+function downloadAsJsonFile(data, fileName = "data.json") {
+    // Convert the object to a JSON string
+    const jsonString = JSON.stringify(data);
+
+    // Create a Blob with the JSON data
+    const blob = new Blob([jsonString], { type: "application/json" });
+
+    // Create a link element
+    const link = document.createElement("a");
+
+    // Set the download attribute with a filename
+    link.download = fileName;
+
+    // Create a URL for the Blob and set it as the href
+    link.href = URL.createObjectURL(blob);
+
+    // Append the link to the document, click it, and then remove it
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
 // const Qestions = [
 //   {
 //     question: "Which animal’s fingerprints are almost identical to humans?",
