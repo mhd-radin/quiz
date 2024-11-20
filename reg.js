@@ -66,12 +66,13 @@ if (!localStorage.getItem('client')) {
     document.getElementById('division').innerHTML = '';
 
     classes.forEach(function(subject) {
-      var div = Object.keys(data[subject])[0];
-      document.getElementById('division').innerHTML += `<option class="item" value="${div}" data-sector="${subject}">${div} ( ${subject} )</option>`;
-      localStorage.setItem('sector', document.getElementById('division').value)
-      document.getElementById('division').onchange = function() {
-        localStorage.setItem('sector', subject)
-      }
+      Object.keys(data[subject]).forEach(function(div) {
+        document.getElementById('division').innerHTML += `<option value="${div}" data-sector="${subject}">${div} ( ${subject} )</option>`;
+        localStorage.setItem('sector', document.getElementById('division').value)
+        document.getElementById('division').onchange = function() {
+          localStorage.setItem('sector', subject)
+        }
+      })
     })
     hideLoader();
   })
