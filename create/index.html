@@ -40,15 +40,27 @@
   <div class="ui modal">
     <div class="header">Create Question</div>
     <div class="content">
-      <div class="ui input">
-        <textarea type="text" id="qes" placeholder="Question" rows="3" cols="30"></textarea>
+      <div class="ui">
+        <textarea class="ui textarea fluid" type="text" id="qes" placeholder="Question" rows="3" cols="30"></textarea>
       </div>
+      <br>
       <div class="ui right labeled input fluid">
         <input type="number" placeholder="Time" id="time">
         <div class="ui basic label">
           Sec
         </div>
       </div>
+      <br>
+      <div class="ui labeled input fluid">
+        <div class="ui label">
+          Quiz For
+        </div>
+        <select id="sector" class="ui dropdown fluid">
+        </select>
+      </div>
+      
+      <br/>
+      <br>
 
       <div class="ui labeled input fluid">
         <div class="ui label">
@@ -74,11 +86,18 @@
         </div>
         <input type="text" placeholder="Option D" id="optD">
       </div>
+      <br>
       <div class="ui labeled input fluid">
         <div class="ui label">
           Right Answer
         </div>
-        <input type="number" placeholder="Right Answer Index" id="correct">
+        <!-- <input type="number" placeholder="Right Answer Index" id="correct"> -->
+        <select id="correct" class="ui dropdown fluid">
+          <option value="1">A</option>
+          <option value="2">B</option>
+          <option value="3">C</option>
+          <option value="4">D</option>
+        </select>
       </div>
     </div>
     <div class="actions">

@@ -130,7 +130,7 @@ function editReview(username, division, points, totalQes, corrects, wrongs) {
 
   var randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
   document.getElementById('quote').innerHTML = '<strong>"' + randomQuote + '"</strong';
-document.getElementById('message').innerHTML = 'Click trophy button to see your rank in "'+(clientData.subject)+'" quiz!'
+  document.getElementById('message').innerHTML = 'Click trophy button to see your rank in "' + (clientData.subject) + '" quiz!'
 
   info.innerHTML = "Your Result: " + username + " - " + division;
   pointsTag.innerHTML = parseFloat(points).toFixed(2);
@@ -151,6 +151,7 @@ function startQuiz(qesData, userName, subject, division, rollnum, userId) {
   clientData.division = division;
   clientData.rollnum = rollnum;
 
+
   if (clientData.totalQes >= qesData.length) {
     clientData.totalQes = qesData.length;
   }
@@ -167,13 +168,35 @@ function startQuiz(qesData, userName, subject, division, rollnum, userId) {
   clientData.qesData = qesData;
   updateQuestionInfo(clientData.totalQes, clientData.askedQestions.length)
 
+  var sector = JSON.parse(localStorage.getItem('client')).sector;
+  if (sector) {
+    clientData.qesData = getValueBy(clientData.qesData, 'sector', sector);
+    if (clientData.qesData.length == 0) {
+      document.getElementById('clues').remove();
+      document.getElementById('qesInfo').remove();
+      var btn = document.getElementById('nextQes');
+      btn.innerHTML = 'Change Subject';
+      btn.onclick = () => {
+        window.location.href = '../'
+      }
+      document.getElementById('timer').remove();
+      document.getElementById('question').innerHTML = 'No Questions available for your class or division';
+      return 0;
+    }
+  }
+  
   nextQuestion(qesData);
+}
+
+function getValueBy(array, key, value) {
+  return array.filter(obj => obj[key] === value);
 }
 
 function nextQuestion(qesData) {
   resetAnswersStyle()
   var shuffleQes = shuffleArray(qesData);
   var uniqeArr = getUniqueArray(shuffleQes, clientData.askedQestions, 'question');
+
 
   var qes = uniqeArr[Math.floor(Math.random() * uniqeArr.length)];
   qes = shuffleCluesAndAdjustAnswer(qes);
@@ -244,7 +267,9 @@ function prepareNewQuestion() {
 }
 
 function isQuestionEnded() {
-  return (clientData.totalQes <= clientData.resultData.results.length || clientData.qesData.length === clientData.askedQestions.length);
+  return (
+    clientData.totalQes <= clientData.resultData.results.length ||
+    clientData.qesData.length === clientData.askedQestions.length);
 }
 
 
@@ -482,7 +507,7 @@ function startCountdown(sec) {
       clearInterval(timerStop);
     }
 
-    if ((time + 10) >= sec) {
+    if ((time + (sec / 4)) >= sec) {
       rt.alerts();
       rt.alerted += 1;
       timerElem.style.animation = 'alert 0.5s infinite'

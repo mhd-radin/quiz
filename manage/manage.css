@@ -55,19 +55,25 @@ body {
   font-weight: 600;
 }
 
-.bottom {
+.bottom, .bt {
   position: sticky;
   position: -webkit-sticky;
   top: 0;
   left: 0;
   padding: 3px;
-  background: #25679F;
+  background: #31B651;
   width: calc(100% - 3px);
   z-index: 999;
 }
 
 .bottom .search {
   width: calc(100% - 85px);
+}
+
+.bt {
+  position: inherit;
+  margin-bottom: 5px;
+  padding-bottom: 6px;
 }
 
 .buttons {

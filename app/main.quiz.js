@@ -4,6 +4,11 @@ if (localStorage.getItem('clientData')) {
   clientData = JSON.parse(localStorage.getItem('clientData'));
 }
 
+if (!(JSON.parse(localStorage.getItem('client')).sector)) {
+  localStorage.clear();
+  location.href = '../';
+}
+
 if (localStorage.getItem('results')) {
   clientData.resultData = JSON.parse(localStorage.getItem('results'));
 }
