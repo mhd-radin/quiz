@@ -3,7 +3,7 @@ var topic = document.getElementById('topic');
 var addBtn = document.getElementById('addBtn');
 
 
-function createSessionHtml(title, sector) {
+function createSessionHtml(title) {
   return new TagString(`
 <div class="topic-session" id="${title}">
   <div class="topic-title">
@@ -14,14 +14,14 @@ function createSessionHtml(title, sector) {
 </div>`)
 }
 
-function createItemHtml(id, qesTitle, qesClues = [], rightAnswerIndex, sector = '') {
+function createItemHtml(id, qesTitle, qesClues = [], rightAnswerIndex) {
   var clueString = '';
   qesClues.forEach(function(str, index) {
     clueString += '<li ' + (index == rightAnswerIndex ? 'class="success"' : '') + '>' + str + '</li>';
   })
   return new TagString(`
 <div class="qes" id=${id}>
-  <div class="title">${qesTitle} <span class="sector">${sector ? ('( For '+sector+' ) ') : ''}</span></div>
+  <div class="title">${qesTitle} </div>
   <ul>
     ${clueString}
   </ul>
@@ -68,16 +68,13 @@ bushido.realtime.onSet('quiz', function(snapshot) {
         var qesB = data[subject][b];
         
         if (qesA.date && qesB.date){
-          if (qesA.sector > qesB.sector) return 1;
-          if (qesA.sector < qesB.sector) return -1;
-          
           return (new Date(qesB.date) - new Date(qesA.date));
         }
       })
       
       questions.forEach(function(qesId, qesIndex) {
         var qes = data[subject][qesId];
-        var item = createItemHtml(qesId, ((qesIndex + 1) + '. ' + qes.question), getObjectValues(qes.clues), qes.rightAnswerIndex, qes.sector);
+        var item = createItemHtml(qesId, ((qesIndex + 1) + '. ' + qes.question), getObjectValues(qes.clues), qes.rightAnswerIndex);
         var itElem = item.parseElement()[0];
 
         subjectElem.querySelector('.topic-body').appendChild(itElem)
@@ -100,7 +97,6 @@ function getDataFromInp() {
   var topicValue = topic.value;
   var qes = document.getElementById('qes').value;
   var time = document.getElementById('time').value;
-  var sector = document.getElementById('sector').value;
   var optA = document.getElementById('optA').value;
   var optB = document.getElementById('optB').value;
   var optC = document.getElementById('optC').value;
@@ -110,9 +106,6 @@ function getDataFromInp() {
   if (!qes) {
     return null;
   } else if (!correct) {
-    return null;
-  } else if (!sector) {
-    alert('Class name required. if class name selector is blank, go to manage and add classes to fix it!')
     return null;
   } else if (!time) {
     return null;
@@ -127,7 +120,6 @@ function getDataFromInp() {
       rightAnswerIndex: (correct - 1),
       time: time,
       date: new Date().toString(),
-      sector,
       id: ('QES_' + Math.floor(Math.random() * 99999))
     }
 
@@ -145,7 +137,6 @@ function getDataFromInp() {
 function editQes(subject, qesId, presentData) {
   document.getElementById('qes').value = presentData.question;
   document.getElementById('time').value = presentData.time;
-  document.getElementById('sector').value = presentData.sector;
   document.getElementById('optA').value = presentData.clues[0];
   document.getElementById('optB').value = presentData.clues[1];
   if (presentData.clues[2]) document.getElementById('optC').value = presentData.clues[2];
@@ -195,12 +186,6 @@ addBtn.onclick = function() {
 }
 
 
-bushido.realtime.get('quizSectors').then(function(snapshot) {
-  var data = snapshot.val();
-  Object.keys(data).forEach(function(sub) {
-    document.getElementById('sector').innerHTML += '<option value="'+sub+'">'+sub+'</option>'
-  })
-})
 
 function clearAllData() {
   bushido.realtime.set('quiz', null);

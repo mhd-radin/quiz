@@ -1,11 +1,6 @@
 var regBtn = document.getElementById('reg-btn');
 var quizBtn = document.getElementById('quiz-btn');
 
-if ((JSON.parse(localStorage.getItem('client'))) && !(JSON.parse(localStorage.getItem('client')).sector)) {
-  localStorage.clear();
-  updateModals()
-}
-
 
 function hideLoader() {
   document.querySelector('.loader').style.display = 'none'
@@ -39,7 +34,6 @@ regBtn.onclick = function() {
   var name = document.getElementById('name');
   var division = document.getElementById('division');
   var rollnum = document.getElementById('rollnum');
-  var sector = localStorage.getItem('sector');
 
   if (!name.value) {
     alert('Fill your name correctly')
@@ -51,7 +45,6 @@ regBtn.onclick = function() {
       name: name.value,
       id,
       division: division.value,
-      sector: sector,
       rollnum: rollnum.value,
     }
     localStorage.setItem('client', JSON.stringify(data));
@@ -67,11 +60,7 @@ if (!localStorage.getItem('client')) {
 
     classes.forEach(function(subject) {
       Object.keys(data[subject]).forEach(function(div) {
-        document.getElementById('division').innerHTML += `<option value="${div}" data-sector="${subject}">${div} ( ${subject} )</option>`;
-        localStorage.setItem('sector', document.getElementById('division').value)
-        document.getElementById('division').onchange = function() {
-          localStorage.setItem('sector', subject)
-        }
+        document.getElementById('division').innerHTML += `<option value="${div}">${div} ( ${subject} )</option>`;
       })
     })
     hideLoader();

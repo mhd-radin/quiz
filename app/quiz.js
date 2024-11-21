@@ -167,23 +167,6 @@ function startQuiz(qesData, userName, subject, division, rollnum, userId) {
   }
   clientData.qesData = qesData;
   updateQuestionInfo(clientData.totalQes, clientData.askedQestions.length)
-
-  var sector = JSON.parse(localStorage.getItem('client')).sector;
-  if (sector) {
-    clientData.qesData = getValueBy(clientData.qesData, 'sector', sector);
-    if (clientData.qesData.length == 0) {
-      document.getElementById('clues').remove();
-      document.getElementById('qesInfo').remove();
-      var btn = document.getElementById('nextQes');
-      btn.innerHTML = 'Change Subject';
-      btn.onclick = () => {
-        window.location.href = '../'
-      }
-      document.getElementById('timer').remove();
-      document.getElementById('question').innerHTML = 'No Questions available for your class or division';
-      return 0;
-    }
-  }
   
   nextQuestion(qesData);
 }
