@@ -320,7 +320,7 @@ function handleEndQuiz() {
     resultData.wrongs)
 
   document.querySelector('.body').style.display = 'none'
-  document.querySelector('.end-session').style.display = 'block'
+  document.querySelector('.end-session').style.display = 'flex'
 
   setTimeout(function() {
     var count = 200;
