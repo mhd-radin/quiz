@@ -4,6 +4,12 @@ if (localStorage.getItem('clientData')) {
   clientData = JSON.parse(localStorage.getItem('clientData'));
 }
 
+if (
+  localStorage.getItem('client') &&
+  typeof JSON.parse(localStorage.getItem('client')).section == 'undefined' || localStorage.getItem('section') === null) {
+  localStorage.clear();
+}
+
 
 if (localStorage.getItem('results')) {
   clientData.resultData = JSON.parse(localStorage.getItem('results'));
@@ -29,7 +35,7 @@ if (!localStorage.getItem('client') || !localStorage.getItem('subject')) {
     var subject = localStorage.getItem('subject');
     var arr = [];
 
-    bushido.realtime.get('quiz/' + subject).then(function(snapshot) {
+    bushido.realtime.get(localStorage.getItem('section') + '_quiz/' + subject).then(function(snapshot) {
       var data = snapshot.val();
       if (snapshot.exists()) {
         var keys = Object.keys(data).forEach(function(key) {

@@ -64,7 +64,7 @@ function listOut(data, subject) {
   })
 }
 
-bushido.realtime.get('quizLeader').then(function(snapshot) {
+bushido.realtime.get(localStorage.getItem('section')+'_quizLeader').then(function(snapshot) {
   hideLoader()
   saveSnapshot = snapshot.val();
   subjectInp.innerHTML = '';

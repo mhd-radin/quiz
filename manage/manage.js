@@ -109,11 +109,6 @@ document.getElementById('topic').onchange = function() {
   window.location.href = '#' + document.getElementById('topic').value;
 }
 
-document.getElementById('lbd').onclick = function (){
-  if (confirm('Are you sure to clear leader board data of '+topic.value)){
-    bushido.realtime.set('quizLeader/'+topic.value, null)
-  }
-}
 
 // const Qestions = [
 //   {

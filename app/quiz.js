@@ -295,7 +295,7 @@ function handleEndQuiz() {
   clientData.end = true;
   var resultData = clientData.resultData;
   saveLocalData();
-  bushido.realtime.set('quizResults/' + clientData.userId + '/' + clientData.subject, clientData.resultData);
+  bushido.realtime.set(localStorage.getItem('section')+'_quizResults/' + clientData.userId + '/' + clientData.subject, clientData.resultData);
   var leaderData = {
     wrongs: resultData.wrongs,
     corrects: resultData.corrects,
@@ -305,10 +305,10 @@ function handleEndQuiz() {
     division: clientData.division,
     rollnum: clientData.rollnum,
   }
-  bushido.realtime.get('quizLeader/' + clientData.subject + '/' + clientData.userId).then(function(snapshot) {
+  bushido.realtime.get(localStorage.getItem('section')+'_quizLeader/' + clientData.subject + '/' + clientData.userId).then(function(snapshot) {
     var data = snapshot.val();
     if ((!snapshot.exists()) || data.points < leaderData.points) {
-      bushido.realtime.set('quizLeader/' + clientData.subject + '/' + clientData.userId, leaderData);
+      bushido.realtime.set(localStorage.getItem('section')+'_quizLeader/' + clientData.subject + '/' + clientData.userId, leaderData);
     }
   });
   editReview(

@@ -86,35 +86,55 @@ function clearSessionBody(subject) {
   document.getElementById(subject).querySelector('.topic-body').innerHTML = '';
 }
 
-bushido.realtime.get('quizSubjects').then((snapshot) => {
-  var data = snapshot.val();
-  clearBody();
-  if (snapshot.exists()) {
-    var subjects = Object.keys(data);
-    searchData = subjects;
+var sectionInp = document.getElementById('section');
 
-    document.getElementById('subjects').innerHTML = '';
-    subjects.forEach(function(subject) {
-      document.getElementById('subjects').innerHTML += `<li class="px-4 py-2 hover:bg-gray-600 cursor-pointer">${subject}</li>`
-
-
-      var session = createSessionHtml(subject);
-      var subjectElem = session.parseElement()[0];
-      table.appendChild(subjectElem)
-      
-      subjectElem.querySelector('.topic-body').innerHTML = '<b>Click to load data<b>'
-
-      subjectElem.onclick = function() {
-        receiveQuestions(subject, subjectElem)
-      }
-    })
-  } else {
-    table.innerHTML = '<h3 class="text-2xl font-bold">No Data Found!</h3> <p class="text-gray-400">could not find any subjects. create new subject or check your internet connection</p>'
+document.getElementById('section').onchange = function() {
+  var val = document.getElementById('section').value;
+  if (val != '') {
+    loadSubjects(val);
   }
+}
+
+bushido.realtime.get('quizSectors').then(function(snapshot) {
+  var data = snapshot.val();
+  var classes = Object.keys(data);
+
+  classes.forEach(function(sectionName) {
+    document.getElementById('section').appendChild(new TagString(`<option value="${sectionName}">${sectionName}</option>`).parseElement()[0]);
+  })
 })
 
-function receiveQuestions(subject, subjectElem) {
-  bushido.realtime.onSet('quiz/' + subject, function(snapshot) {
+function loadSubjects(section) {
+  bushido.realtime.get(section + '_quizSubjects').then((snapshot) => {
+    var data = snapshot.val();
+    clearBody();
+    if (snapshot.exists()) {
+      var subjects = Object.keys(data);
+      searchData = subjects;
+
+      document.getElementById('subjects').innerHTML = '';
+      subjects.forEach(function(subject) {
+        document.getElementById('subjects').innerHTML += `<li class="px-4 py-2 hover:bg-gray-600 cursor-pointer">${subject}</li>`
+
+
+        var session = createSessionHtml(subject);
+        var subjectElem = session.parseElement()[0];
+        table.appendChild(subjectElem)
+
+        subjectElem.querySelector('.topic-body').innerHTML = '<b>Click to load data<b>'
+
+        subjectElem.onclick = function() {
+          receiveQuestions(section, subject, subjectElem)
+        }
+      })
+    } else {
+      table.innerHTML = '<h3 class="text-2xl font-bold">No Data Found!</h3> <p class="text-gray-400">could not find any subjects. create new subject or check your internet connection</p>'
+    }
+  })
+}
+
+function receiveQuestions(section, subject, subjectElem) {
+  bushido.realtime.onSet(section + '_quiz/' + subject, function(snapshot) {
     var data = snapshot.val();
     subjectElem.onclick = function() {}
     clearSessionBody(subject);
@@ -140,15 +160,17 @@ function receiveQuestions(subject, subjectElem) {
 
         itElem.querySelector('button.negative').addEventListener('click', function() {
           if (confirm('Are you sure to delete this question permanently')) {
-            bushido.realtime.set('quiz/' + subject + '/' + qesId, null);
+            bushido.realtime.set(section + '_quiz/' + subject + '/' + qesId, null);
             if (questions.length == 1) {
-              bushido.realtime.set('quizSubjects/' + subject, null)
+              alert('Deleting Subject...!');
+              bushido.realtime.set(section + '_quizSubjects/' + subject, null);
+              bushido.realtime.set(section + '_quizLeader/' + subject, null);
             }
           }
         })
 
         itElem.querySelector('button.positive').addEventListener('click', function() {
-          editQes(subject, qesId, qes);
+          editQes(subject, qesId, qes, section);
         })
       })
     } else {
@@ -169,6 +191,8 @@ function getDataFromInp() {
 
   if (!qes) {
     return null;
+  } else if (!sectionInp.value) {
+    alert("Please complete the form accurately. Select a class to add questions. If no classes are available, create new class divisions on the Manage page.")
   } else if (!correct) {
     return null;
   } else if (!time) {
@@ -198,7 +222,7 @@ function getDataFromInp() {
   }
 }
 
-function editQes(subject, qesId, presentData) {
+function editQes(subject, qesId, presentData, section) {
   document.getElementById('qes').value = presentData.question;
   document.getElementById('time').value = presentData.time;
   document.getElementById('optA').value = presentData.clues[0];
@@ -214,7 +238,7 @@ function editQes(subject, qesId, presentData) {
       data.id = presentData.id;
       data.date = presentData.date;
 
-      bushido.realtime.set('quiz/' + subject + '/' + data.id, data).then(function() {
+      bushido.realtime.set(section + '_quiz/' + subject + '/' + data.id, data).then(function() {
         // done
       })
 
@@ -234,9 +258,9 @@ addBtn.onclick = function() {
     var data = getDataFromInp();
     if (data && topicValue) {
 
-      bushido.realtime.set('quiz/' + topicValue + '/' + data.id, data).then(function() {
+      bushido.realtime.set(sectionInp.value + '_quiz/' + topicValue + '/' + data.id, data).then(function() {
         // done
-        bushido.realtime.set('quizSubjects/' + topicValue, topicValue).then(function() {
+        bushido.realtime.set(sectionInp.value + '_quizSubjects/' + topicValue, topicValue).then(function() {
           window.location.href = '#' + data.id;
         })
       })
@@ -248,26 +272,20 @@ addBtn.onclick = function() {
   }
 }
 
+// bushido.realtime.get('quizSubjects').then(function(dt){
+//   var data = dt.val();
+//   bushido.realtime.set('Plus Two_quizSubjects', data).then((item) => alert())
+// })
 
 
-function clearAllData() {
-  bushido.realtime.set('quiz', null);
-  bushido.realtime.set('quizLeader', null);
-  bushido.realtime.set('quizResults', null)
-}
+// bushido.realtime.get('quiz').then(function(dt){
+//   var data = dt.val();
+//   bushido.realtime.set('Plus Two_quiz', data).then((item) => alert())
+// })
 
-function clearQuestionData() {
-  bushido.realtime.set('quiz', null);
-}
 
-function clearUsersData() {
-  bushido.realtime.set('quiz', null);
-  bushido.realtime.set('quizLeader', null);
-  bushido.realtime.set('quizResults', null)
-}
-
-function addFromJSON(topic, dataInArray = []) {
-  bushido.realtime.set('quiz/' + topic, dataInArray)
+function addFromJSON(section, topic, dataInArray = []) {
+  bushido.realtime.set(section + '_quiz/' + topic, dataInArray)
 }
 
 
