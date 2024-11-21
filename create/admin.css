@@ -78,3 +78,16 @@ body {
 ::-webkit-scrollbar {
   display: none;
 }
+
+
+
+
+  .ui.cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+    .ui.card .extra.content .grid {
+      margin: 0;
+    }
