@@ -73,6 +73,9 @@ class QuizResultData {
         // 0 Alerts: 5
 
         var timePoints = (20 - timeSegement);
+        if (timePoints === 0){
+          self.points -= 10;
+        }
         var alertsPoints = (item.alerts > 0 ? 0 : 5);
         self.points += (25 + timePoints + alertsPoints);
       } else {

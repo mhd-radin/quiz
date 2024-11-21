@@ -67,7 +67,7 @@ if (!localStorage.getItem('client')) {
   })
 }
 
-bushido.realtime.get('quiz').then(function(snapshot) {
+bushido.realtime.get('quizSubjects').then(function(snapshot) {
   if (localStorage.getItem('client')) hideLoader();
   var data = snapshot.val();
   var keys = Object.keys(data);

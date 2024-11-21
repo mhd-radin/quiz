@@ -82,8 +82,11 @@ function clearBody() {
   table.innerHTML = '';
 }
 
+function clearSessionBody(subject) {
+  document.getElementById(subject).querySelector('.topic-body').innerHTML = '';
+}
 
-bushido.realtime.onSet('quiz', function(snapshot) {
+bushido.realtime.get('quizSubjects').then((snapshot) => {
   var data = snapshot.val();
   clearBody();
   if (snapshot.exists()) {
@@ -98,12 +101,29 @@ bushido.realtime.onSet('quiz', function(snapshot) {
       var session = createSessionHtml(subject);
       var subjectElem = session.parseElement()[0];
       table.appendChild(subjectElem)
+      
+      subjectElem.querySelector('.topic-body').innerHTML = '<b>Click to load data<b>'
 
-      var questions = Object.keys(data[subject]);
+      subjectElem.onclick = function() {
+        receiveQuestions(subject, subjectElem)
+      }
+    })
+  } else {
+    table.innerHTML = '<h3 class="text-2xl font-bold">No Data Found!</h3> <p class="text-gray-400">could not find any subjects. create new subject or check your internet connection</p>'
+  }
+})
+
+function receiveQuestions(subject, subjectElem) {
+  bushido.realtime.onSet('quiz/' + subject, function(snapshot) {
+    var data = snapshot.val();
+    subjectElem.onclick = function() {}
+    clearSessionBody(subject);
+    if (snapshot.exists()) {
+      var questions = Object.keys(data);
 
       questions.sort((a, b) => {
-        var qesA = data[subject][a];
-        var qesB = data[subject][b];
+        var qesA = data[a];
+        var qesB = data[b];
 
         if (qesA.date && qesB.date) {
           return (new Date(qesB.date) - new Date(qesA.date));
@@ -111,7 +131,7 @@ bushido.realtime.onSet('quiz', function(snapshot) {
       })
 
       questions.forEach(function(qesId, qesIndex) {
-        var qes = data[subject][qesId];
+        var qes = data[qesId];
         var item = createItemHtml(qesId, (qes.question), getObjectValues(qes.clues), qes.rightAnswerIndex, (qesIndex + 1));
         var itElem = item.parseElement()[0];
 
@@ -131,11 +151,11 @@ bushido.realtime.onSet('quiz', function(snapshot) {
           editQes(subject, qesId, qes);
         })
       })
-    })
-  } else {
-    table.innerHTML = '<h1>No Data Found!</h1>'
-  }
-}).catch(alert);
+    } else {
+      subjectElem.querySelector('.topic-body').innerHTML = '<h3 class="text-2xl font-bold">No Question Found!</h3> <p class="text-gray-400">could not find any questions. create new question or check your internet connection</p>';
+    }
+  }).catch(alert);
+}
 
 function getDataFromInp() {
   var topicValue = topic.value;
@@ -216,7 +236,7 @@ addBtn.onclick = function() {
 
       bushido.realtime.set('quiz/' + topicValue + '/' + data.id, data).then(function() {
         // done
-        bushido.realtime.set('quizSubjects', topicValue).then(function() {
+        bushido.realtime.set('quizSubjects/' + topicValue, topicValue).then(function() {
           window.location.href = '#' + data.id;
         })
       })
@@ -255,7 +275,6 @@ function addFromJSON(topic, dataInArray = []) {
 document.getElementById('topic').onchange = function() {
   window.location.href = '#' + document.getElementById('topic').value;
 }
-
 
 // Data for comparison in the dropdown
 var searchData = [];
