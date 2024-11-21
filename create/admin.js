@@ -5,7 +5,7 @@ var addBtn = document.getElementById('addBtn');
 
 function createSessionHtml(title) {
   return new TagString(`
-<div class="max-w-md rounded-lg border-2 border-blue-500 bg-gray-800 shadow-lg overflow-hidden my-2" id="${title}">
+<div class=" rounded-lg border-2 border-blue-500 bg-gray-800 shadow-lg overflow-hidden my-2" id="${title}">
   <!-- Head -->
   <div class="bg-blue-500 bg-opacity-80 text-white py-3 px-4">
     <h2 class="text-lg font-bold topic-title">${title}</h2>
@@ -38,7 +38,7 @@ function createItemHtml(id, qesTitle, qesClues = [], rightAnswerIndex, num = '')
   })
 
   return new TagString(`
-<div class="bg-gray-800 shadow-lg rounded-lg p-3 w-full max-w-sm my-2">
+<div class="bg-gray-800 shadow-lg rounded-lg p-3 w-full max-w-sm my-2 mx-2">
   <div class="flex justify-between items-center mb-4" id="${id}">
     <h2 class="text-lg font-bold">Question ${num}.</h2>
     <!-- Lucide Edit Icon -->
@@ -112,7 +112,7 @@ bushido.realtime.onSet('quiz', function(snapshot) {
 
       questions.forEach(function(qesId, qesIndex) {
         var qes = data[subject][qesId];
-        var item = createItemHtml(qesId, (qes.question), getObjectValues(qes.clues), qes.rightAnswerIndex, (qesIndex+1));
+        var item = createItemHtml(qesId, (qes.question), getObjectValues(qes.clues), qes.rightAnswerIndex, (qesIndex + 1));
         var itElem = item.parseElement()[0];
 
         subjectElem.querySelector('.topic-body').appendChild(itElem)
@@ -121,6 +121,9 @@ bushido.realtime.onSet('quiz', function(snapshot) {
         itElem.querySelector('button.negative').addEventListener('click', function() {
           if (confirm('Are you sure to delete this question permanently')) {
             bushido.realtime.set('quiz/' + subject + '/' + qesId, null);
+            if (questions.length == 1) {
+              bushido.realtime.set('quizSubjects/' + subject, null)
+            }
           }
         })
 
@@ -213,7 +216,9 @@ addBtn.onclick = function() {
 
       bushido.realtime.set('quiz/' + topicValue + '/' + data.id, data).then(function() {
         // done
-        window.location.href = '#' + data.id;
+        bushido.realtime.set('quizSubjects', topicValue).then(function() {
+          window.location.href = '#' + data.id;
+        })
       })
 
       closeModal();
