@@ -61,7 +61,16 @@ bushido.realtime.onSet('quizSectors', function(snapshot) {
         subjectElem.querySelector('.topic-body').appendChild(itElem)
 
         itElem.querySelector('button.negative').addEventListener('click', function() {
-          bushido.realtime.set('quizSectors/' + subject + '/' + qesId, null);
+          if (confirm('Are you sure to delete this division permanently')) {
+            bushido.realtime.set(subject + '_quiz/' + subject + '/' + qesId, null);
+            if (questions.length == 1) {
+              alert('Deleting Data of Class including divisions, subjects and questions, leaderboard data and review...!');
+              bushido.realtime.set(subject + '_quizSubjects', null);
+              bushido.realtime.set(subject + '_quizLeader', null);
+              bushido.realtime.set(subject + '_quiz', null);
+              bushido.realtime.set(subject + '_quizResults/', null);
+            }
+          }
         })
       })
     })
