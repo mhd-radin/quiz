@@ -1,70 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap');
 @import url("../../cdn_modules/animate.css@4.1.1/animate.min.css");
-@import url("../../cdn_modules/semantic-ui@2.5.0/semantic.min.css");
 
 body {
   font-family: "Lexend", sans-serif;
   margin: 0;
-}
-
-.table {
-  overflow: scroll;
-}
-
-.topic-session {
-  margin-bottom: 20px;
-}
-
-.topic-title {
-  background: #3F7AAC;
-  color: #fff;
-  font-size: 20px;
-  padding: 10px;
-}
-
-.topic-body {
-  display: flex;flex-direction: column;
-}
-
-.qes {
-  padding: 10px;
-  margin: 2px;
-  border: 1px solid #ccc;
-}
-
-.qes .title {
-  font-size: 16px;
-  font-weight: bold;
-}
-
-.qes ul {
-  list-style-type: decimal;
-  font-size: 14px;
-}
-
-.qes ul .success {
-  color: #44A13D;
-}
-
-.bottom {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  padding: 3px;
-}
-
-.ua {
-  color: #773FAC;
-}
-
-.ra {
-  color: #3FAC53;
-}
-
-.wa {
-  color: #DF5858;
-}
-
-::-webkit-scrollbar {
-  display: none;
 }
