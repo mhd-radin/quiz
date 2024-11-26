@@ -76,21 +76,21 @@ if (!localStorage.getItem('client')) {
     })
     hideLoader();
   })
-} else {
+}
 
-  bushido.realtime.get(localStorage.getItem('section')+'_quizSubjects').then(function(snapshot) {
-    if (!snapshot.exists()){localStorage.clear();location.reload();}
-    if (localStorage.getItem('client')) hideLoader();
-    var data = snapshot.val();
-    var keys = Object.keys(data);
-    keys.forEach(function(subject) {
-      document.getElementById('subject').innerHTML += '<option value="' + subject + '">' + subject + '</option>'
-    })
+bushido.realtime.get(localStorage.getItem('section') + '_quizSubjects').then(function(snapshot) {
+  if (!snapshot.exists()) { localStorage.clear();
+    location.reload(); alert('no data found! check your internet') }
+  if (localStorage.getItem('client')) hideLoader();
+  var data = snapshot.val();
+  var keys = Object.keys(data);
+  keys.forEach(function(subject) {
+    document.getElementById('subject').innerHTML += '<option value="' + subject + '">' + subject + '</option>'
   })
+})
 
-  quizBtn.onclick = function() {
-    var subject = document.getElementById('subject');
-    localStorage.setItem('subject', subject.value);
-    window.location.href = './app';
-  }
+quizBtn.onclick = function() {
+  var subject = document.getElementById('subject');
+  localStorage.setItem('subject', subject.value);
+  window.location.href = './app';
 }
